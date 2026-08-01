@@ -1,0 +1,32 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --color-bg: #1B1D1F;
+  --color-panel: #202325;
+  --color-panel-edge: #2E3234;
+  --color-accent: #FF7A1A;
+  --color-ok: #4CAF6D;
+  --color-text: #F3F1EC;
+  --color-text-muted: #8C8F90;
+  --font-display: 'IBM Plex Sans', sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+}
+
+#root {
+  min-height: 100vh;
+  width: 100%;
+}
+
+body {
+  font-family: var(--font-display);
+  background: var(--color-bg);
+}
