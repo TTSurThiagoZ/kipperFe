@@ -1,89 +1,111 @@
 .splash-container {
+  position: relative;
+  overflow: hidden;
   min-height: 100vh;
   width: 100%;
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 16vh;
+  background: linear-gradient(160deg, var(--color-primary-start), var(--color-primary-end));
+}
+
+.splash-container::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.05;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+}
+
+.splash-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  pointer-events: none;
+}
+
+.splash-blob-1 {
+  width: 320px;
+  height: 320px;
+  background: rgba(255, 255, 255, 0.16);
+  top: -80px;
+  right: -60px;
+  animation: drift 9s ease-in-out infinite;
+}
+
+.splash-blob-2 {
+  width: 260px;
+  height: 260px;
+  background: rgba(0, 0, 0, 0.12);
+  bottom: -90px;
+  left: -70px;
+  animation: drift 11s ease-in-out infinite reverse;
+}
+
+.splash-badge {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.24), rgba(255, 255, 255, 0.08) 70%);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18), inset 0 1px 1px rgba(255, 255, 255, 0.3);
+  display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--color-bg);
-  background-image:
-    linear-gradient(var(--color-panel-edge) 1px, transparent 1px),
-    linear-gradient(90deg, var(--color-panel-edge) 1px, transparent 1px);
-  background-size: 32px 32px;
-  background-position: center;
+  margin-bottom: 1.5rem;
+  animation: pop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  z-index: 1;
 }
 
-.splash-panel {
-  width: 320px;
-  display: flex;
-  flex-direction: column;
-  gap: 1.25rem;
+.splash-logo-img {
+  width: 72px;
+  height: 72px;
 }
 
-.splash-brand {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
+.splash-title {
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--color-white);
+  letter-spacing: 0.2px;
+  z-index: 1;
 }
 
-.splash-mark {
-  width: 40px;
-  height: 40px;
+.splash-subtitle {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--color-text-on-primary);
+  margin-bottom: 2rem;
+  z-index: 1;
 }
 
-.splash-wordmark {
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 1.4rem;
-  letter-spacing: 2px;
-  color: var(--color-text);
+.splash-loader-icon {
+  width: 26px;
+  height: 26px;
+  opacity: 0.9;
+  transform-origin: 60% 45%;
+  animation: wrenchTurn 1.3s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+  z-index: 1;
 }
 
-.splash-log {
-  font-family: var(--font-mono);
-  font-size: 0.8rem;
-  color: var(--color-text-muted);
-  min-height: 96px;
-  display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
+@keyframes wrenchTurn {
+  0%, 100% { transform: rotate(-16deg); }
+  50% { transform: rotate(16deg); }
 }
 
-.splash-log-line {
-  white-space: pre;
+@keyframes pop {
+  from { transform: scale(0.7); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
 }
 
-.splash-prompt {
-  color: var(--color-accent);
-  margin-right: 0.4rem;
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
-.splash-cursor {
-  display: inline-block;
-  width: 7px;
-  animation: blink 0.9s step-end infinite;
-  color: var(--color-accent);
-}
-
-.splash-progress-track {
-  width: 100%;
-  height: 3px;
-  background: var(--color-panel-edge);
-}
-
-.splash-progress-fill {
-  height: 100%;
-  background: var(--color-accent);
-  transition: width 0.1s linear;
-}
-
-.splash-progress-label {
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  color: var(--color-text-muted);
-  text-align: right;
-}
-
-@keyframes blink {
-  0%, 50% { opacity: 1; }
-  51%, 100% { opacity: 0; }
+@keyframes drift {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(-16px, 12px); }
 }

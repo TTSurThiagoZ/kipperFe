@@ -5,15 +5,14 @@
 }
 
 :root {
-  --color-bg: #1B1D1F;
-  --color-panel: #202325;
-  --color-panel-edge: #2E3234;
-  --color-accent: #FF7A1A;
-  --color-ok: #4CAF6D;
-  --color-text: #F3F1EC;
-  --color-text-muted: #8C8F90;
-  --font-display: 'IBM Plex Sans', sans-serif;
-  --font-mono: 'IBM Plex Mono', monospace;
+  --color-primary-start: #8B5CF6;
+  --color-primary-end: #6D28D9;
+  --color-white: #FFFFFF;
+  --color-text-dark: #1F2937;
+  --color-text-muted: #6B7280;
+  --color-text-on-primary: rgba(255, 255, 255, 0.8);
+  --font-heading: 'Poppins', sans-serif;
+  --font-body: 'Inter', sans-serif;
 }
 
 html, body {
@@ -27,6 +26,5 @@ html, body {
 }
 
 body {
-  font-family: var(--font-display);
-  background: var(--color-bg);
+  font-family: var(--font-body);
 }

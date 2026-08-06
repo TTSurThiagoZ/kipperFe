@@ -4,28 +4,21 @@ import WelcomeScreen from "./components/WelcomeScreen";
 import "./App.css";
 
 function App() {
-  const [showSplash, setShowSplash] = useState(true);
-  const [fadeOut, setFadeOut] = useState(false);
+  const [showWelcome, setShowWelcome] = useState(false);
 
   useEffect(() => {
-    const startFade = setTimeout(() => setFadeOut(true), 2200);
-    const removeSplash = setTimeout(() => setShowSplash(false), 2600);
-    return () => {
-      clearTimeout(startFade);
-      clearTimeout(removeSplash);
-    };
+    const t = setTimeout(() => setShowWelcome(true), 1500);
+    return () => clearTimeout(t);
   }, []);
 
   return (
     <div className="app-root">
-      {showSplash && (
-        <div className={`splash-wrapper ${fadeOut ? "splash-fade-out" : ""}`}>
-          <SplashScreen />
-        </div>
-      )}
-      {!showSplash && (
+      <div className={`stage-layer ${showWelcome ? "stage-hidden" : ""}`}>
+        <SplashScreen />
+      </div>
+      <div className={`stage-layer ${showWelcome ? "" : "stage-hidden"}`}>
         <WelcomeScreen onAdvance={() => console.log("Avançar clicado")} />
-      )}
+      </div>
     </div>
   );
 }

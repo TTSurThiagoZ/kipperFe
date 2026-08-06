@@ -1,120 +1,117 @@
 .welcome-container {
+  position: relative;
+  overflow: hidden;
   min-height: 100vh;
   width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--color-bg);
-  padding: 1rem;
-}
-
-.welcome-frame {
-  position: relative;
-  width: 100%;
-  max-width: 420px;
-  padding: 16px;
-}
-
-.corner {
-  position: absolute;
-  width: 22px;
-  height: 22px;
-  border: 2px solid var(--color-accent);
-}
-
-.corner-tl { top: 0; left: 0; border-right: none; border-bottom: none; }
-.corner-tr { top: 0; right: 0; border-left: none; border-bottom: none; }
-.corner-bl { bottom: 0; left: 0; border-right: none; border-top: none; }
-.corner-br { bottom: 0; right: 0; border-left: none; border-top: none; }
-
-.welcome-card {
-  background: var(--color-panel);
-  border: 1px solid var(--color-panel-edge);
-  padding: 1.75rem;
-}
-
-.ticket-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  color: var(--color-text-muted);
-  letter-spacing: 0.5px;
-}
-
-.ticket-status {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  color: var(--color-ok);
-}
-
-.status-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--color-ok);
-  animation: pulseDot 1.6s ease-in-out infinite;
-}
-
-.ticket-divider {
-  border-top: 1px dashed var(--color-panel-edge);
-  margin: 1rem 0 1.75rem;
-}
-
-.welcome-body {
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  gap: 0.75rem;
-  margin-bottom: 2rem;
+  padding: 2rem;
+  padding-top: 16vh;
+  background: linear-gradient(160deg, var(--color-primary-start), var(--color-primary-end));
 }
 
-.welcome-mark {
-  width: 56px;
-  height: 56px;
-  margin-bottom: 0.25rem;
+.welcome-container::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.05;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+}
+
+.welcome-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(70px);
+  pointer-events: none;
+}
+
+.welcome-blob-1 {
+  width: 380px;
+  height: 380px;
+  background: rgba(255, 255, 255, 0.14);
+  top: -120px;
+  left: -100px;
+  animation: drift 10s ease-in-out infinite;
+}
+
+.welcome-blob-2 {
+  width: 300px;
+  height: 300px;
+  background: rgba(0, 0, 0, 0.14);
+  bottom: -100px;
+  right: -80px;
+  animation: drift 8s ease-in-out infinite reverse;
+}
+
+.welcome-badge {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.24), rgba(255, 255, 255, 0.08) 70%);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.18), inset 0 1px 1px rgba(255, 255, 255, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  z-index: 1;
+}
+
+.welcome-logo-img {
+  width: 80px;
+  height: 80px;
 }
 
 .welcome-title {
-  font-family: var(--font-display);
-  font-size: 1.9rem;
-  font-weight: 700;
-  color: var(--color-text);
-  letter-spacing: 1px;
+  font-family: var(--font-heading);
+  font-size: 2.25rem;
+  font-weight: 800;
+  color: var(--color-white);
+  letter-spacing: 0.2px;
+  margin-bottom: 0.5rem;
+  z-index: 1;
 }
 
 .welcome-subtitle {
-  font-family: var(--font-mono);
-  font-size: 0.85rem;
-  color: var(--color-text-muted);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  color: var(--color-text-on-primary);
+  max-width: 280px;
+  margin-bottom: 2.5rem;
+  z-index: 1;
 }
 
 .welcome-button {
   width: 100%;
-  padding: 0.9rem 1.5rem;
+  max-width: 320px;
+  padding: 1rem 1.5rem;
   border: none;
-  background: var(--color-accent);
-  color: #1B1D1F;
-  font-family: var(--font-display);
-  font-size: 1rem;
+  border-radius: 999px;
+  background: var(--color-white);
+  color: var(--color-primary-end);
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
   font-weight: 700;
-  letter-spacing: 0.5px;
   cursor: pointer;
-  transition: filter 0.15s ease, transform 0.1s ease;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.6) inset, 0 12px 26px rgba(0, 0, 0, 0.2);
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease;
+  z-index: 1;
 }
 
 .welcome-button:hover {
-  filter: brightness(1.08);
+  transform: translateY(-3px) scale(1.015);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.6) inset, 0 18px 32px rgba(0, 0, 0, 0.26);
 }
 
 .welcome-button:active {
-  transform: scale(0.99);
+  transform: translateY(0) scale(0.98);
+  transition: transform 0.1s ease;
 }
 
-@keyframes pulseDot {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.35; }
+@keyframes drift {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(-18px, 14px); }
 }
