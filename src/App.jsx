@@ -3,10 +3,9 @@ import SplashScreen from "./splash/SplashScreen";
 import WelcomeScreen from "./components/intro/WelcomeScreen";
 import LoginScreen from "./components/auth/LoginScreen";
 import SignupScreen from "./components/auth/SignupScreen";
-import "./App.css";
 
 function App() {
-  const [stage, setStage] = useState("splash"); // "splash" | "intro" | "login" | "signup"
+  const [stage, setStage] = useState("splash");
   const [showIntro, setShowIntro] = useState(false);
 
   useEffect(() => {
@@ -18,14 +17,13 @@ function App() {
     if (showIntro && stage === "splash") setStage("intro");
   }, [showIntro, stage]);
 
-  // Splash e Introdução ficam sobrepostos na mesma posição, fazendo crossfade
   if (stage === "splash" || stage === "intro") {
     return (
-      <div className="app-root">
-        <div className={`stage-layer ${showIntro ? "stage-hidden" : ""}`}>
+      <div className="relative w-full min-h-screen">
+        <div className={`absolute inset-0 transition-opacity duration-500 ${showIntro ? "opacity-0 pointer-events-none" : "opacity-100"}`}>
           <SplashScreen />
         </div>
-        <div className={`stage-layer ${showIntro ? "" : "stage-hidden"}`}>
+        <div className={`absolute inset-0 transition-opacity duration-500 ${showIntro ? "opacity-100" : "opacity-0 pointer-events-none"}`}>
           <WelcomeScreen onAdvance={() => setStage("login")} />
         </div>
       </div>

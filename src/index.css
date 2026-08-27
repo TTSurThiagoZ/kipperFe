@@ -1,18 +1,58 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+@import "tailwindcss";
 
-:root {
+@theme {
   --color-primary-start: #D4A72A;
   --color-primary-end: #85592B;
-  --color-white: #FFFFFF;
-  --color-text-dark: #1F2937;
-  --color-text-muted: #6B7280;
-  --color-text-on-primary: rgba(255, 255, 255, 0.8);
-  --font-heading: 'Poppins', sans-serif;
-  --font-body: 'Inter', sans-serif;
+  --color-primary-end-hover: #6E4A22;
+  --color-primary-end-active: #5F3F1D;
+  --color-on-primary: rgba(255, 255, 255, 0.8);
+
+  --color-ink: #14110C;
+  --color-ink-soft: #F5F0E6;
+  --color-ink-muted: #A79E8E;
+
+  --color-paper: #FAFAF8;
+  --color-ink-strong: #1A1A1A;
+  --color-ink-mid: #55554F;
+  --color-ink-faint: #8A8A85;
+  --color-line: #E3E1DB;
+  --color-placeholder: #B7B5AD;
+  --color-danger: #C0392B;
+
+  --font-heading: "Poppins", sans-serif;
+  --font-body: "Inter", sans-serif;
+
+  --animate-pop: pop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  --animate-wrench-turn: wrenchTurn 1.3s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+  --animate-drift: drift 9s ease-in-out infinite;
+  --animate-drift-reverse: drift 11s ease-in-out infinite reverse;
+}
+
+@keyframes pop {
+  from { transform: scale(0.7); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+@keyframes wrenchTurn {
+  0%, 100% { transform: rotate(-16deg); }
+  50% { transform: rotate(16deg); }
+}
+
+@keyframes drift {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(-16px, 12px); }
+}
+
+/* Textura de ruído da Splash — a única coisa que fica fora de utilities,
+   porque uma imagem SVG inteira dentro de uma className ficaria ilegível */
+.splash-noise::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.09;
+  mix-blend-mode: overlay;
+  pointer-events: none;
 }
 
 html, body {
