@@ -1,0 +1,62 @@
+name: CI React Docker
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  # Job 1: Build da aplicação React
+  build-react:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Instalar Dependências
+        run: npm install
+
+      - name: Build do Projeto
+        run: npm run build
+
+  # Job 2: Construção e Push da Imagem Docker
+  docker-build:
+    runs-on: ubuntu-latest
+    needs: build-react # Garante que o build do React passe antes de começar
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Login no Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }} # Use Secrets para segurança
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build da Imagem Docker
+        run: docker build -t fiecpa2026 .
+
+      - name: Tag e Push da Imagem
+        run: |
+          docker tag fiecpa2026 ${{ secrets.DOCKER_USERNAME }}/fiecpa2026:latest
+          docker push ${{ secrets.DOCKER_USERNAME }}/fiecpa2026:latest
+
+  # Job 3: Rodando na AWS
+  deploy-ec2:
+    runs-on: self-hosted
+    needs: docker-build
+    steps:
+      - name: Forçar Pull da imagem nova (ignora cache local)
+        # O comando pull garante que a imagem no host seja atualizada
+        run: docker pull ${{ secrets.DOCKER_USERNAME }}/kipperfe:latest
+
+      - name: Parar e remover container antigo
+        # Usamos || true para que o workflow não quebre se o container não existir
+        run: |
+          docker stop react-app || true
+          docker rm react-app || true
+
+      - name: Rodar novo container com flag de pull
+        run: |
+          docker run -d \
+            --pull always \
+            --name react-app \
+            -p 3000:3000\
+            ${{ secrets.DOCKER_USERNAME }}/fiecpa2026:latest
