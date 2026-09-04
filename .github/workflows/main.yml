@@ -35,28 +35,26 @@ jobs:
 
       - name: Tag e Push da Imagem
         run: |
-          docker tag fiecpa2026 ${{ secrets.DOCKER_USERNAME }}/fiecpa2026:latest
-          docker push ${{ secrets.DOCKER_USERNAME }}/fiecpa2026:latest
-
+          docker tag fiecpa2026 ${{ secrets.DOCKER_USERNAME }}/kipperfe:latest
+          docker push ${{ secrets.DOCKER_USERNAME }}/kipperfe:latest
+          
   # Job 3: Rodando na AWS
   deploy-ec2:
     runs-on: self-hosted
     needs: docker-build
+    
     steps:
       - name: Forçar Pull da imagem nova (ignora cache local)
-        # O comando pull garante que a imagem no host seja atualizada
         run: docker pull ${{ secrets.DOCKER_USERNAME }}/kipperfe:latest
+  
+      - name: Parar e remover container antigo
+        continue-on-error: true
+        run: docker stop react-app 
 
       - name: Parar e remover container antigo
-        # Usamos || true para que o workflow não quebre se o container não existir
-        run: |
-          docker stop react-app || true
-          docker rm react-app || true
-
+        continue-on-error: true
+        run: docker rm react-app 
+  
       - name: Rodar novo container com flag de pull
-        run: |
-          docker run -d \
-            --pull always \
-            --name react-app \
-            -p 3000:3000\
-            ${{ secrets.DOCKER_USERNAME }}/fiecpa2026:latest
+        run: docker run -d --pull always --name react-app -p 3000:3000 ${{ secrets.DOCKER_USERNAME }}/kipperfe:latest
+
